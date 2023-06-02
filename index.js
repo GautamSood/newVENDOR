@@ -27,7 +27,7 @@ myapp.use("/api/v1/vendors", vendorRoutes);
 const connectDB = async () => {
   return new Promise((res, rej) => {
     mongoose
-      .connect(process.env.MongoURI, {
+      .connect("mongodb+srv://dudejagarvit3:Garvit1839@cluster0.aa2bbme.mongodb.net/", {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })
