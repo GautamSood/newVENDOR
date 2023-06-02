@@ -1,5 +1,6 @@
 import vendorsModel from "../Database/VendorsModel.js";
 import jwt from "jsonwebtoken";
+import { serialize } from "cookie";
 
 const cookieOptions = {
   httpOnly: true,
@@ -30,13 +31,20 @@ const signIn = async (req, res, next) => {
         .json({ message: "Please check or Email address or Password" });
     }
     let token = await generateJWT(vendor);
-    res.cookie("jwt", token, cookieOptions);
-    res
+    // res.cookie("jwt", token, cookieOptions);
+
+      const serialized = serialize("jwt", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 60 * 60 * 24 * 30,
+      });
+    res.setHeader("Set-Cookie", serialized).status(200)
       .json({
         message: "Successfully Loged in",
         token,
-      })
-      .status(200);
+      });
+      
   } catch (error) {
     return res.status(401).json({ error_message: error.message });
   }
@@ -96,7 +104,15 @@ const signUp = async (req, res, next) => {
     await vendor.save();
     let token = await generateJWT(vendor);
 
-    res.cookie("jwt", token, cookieOptions);
+    // res.cookie("jwt", token, cookieOptions);
+    
+      const serialized = serialize("jwt", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 30 * 24 * 60 * 60, 
+      });
+      res.setHeader("Set-Cookie", serialized);
     res.status(200).json({ message: vendor, token });
   } catch (error) {
     res.status(400).json({ error_message: error.message, sucess: false });
