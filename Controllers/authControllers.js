@@ -2,17 +2,17 @@ import vendorsModel from "../Database/VendorsModel.js";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 
-const cookieOptions = {
-  httpOnly: true,
-  maxAge: 86400000,
-  sameSite: "None",
-};
+// const cookieOptions = {
+//   httpOnly: true,
+//   maxAge: 86400000,
+//   sameSite: "None",
+// };
 
 function generateJWT(vendor) {
   return new Promise((resolve, reject) => {
     resolve(
       "Bearer " +
-        jwt.sign({ id: vendor._id }, process.env.JWTSecret, {
+        jwt.sign({ id: vendor._id }, "wemkfi32pr20914icm-4901ix4r24rj1xr2", {
           expiresIn: "10d",
         })
     );
