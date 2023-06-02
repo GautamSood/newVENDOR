@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 const cookieOptions = {
   httpOnly: true,
   maxAge: 86400000,
-  sameSite: "lax",
-  secure: false,
+  sameSite: "none",
+  secure: true,
 };
 
 function generateJWT(vendor) {
