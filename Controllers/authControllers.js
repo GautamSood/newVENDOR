@@ -35,9 +35,10 @@ const signIn = async (req, res, next) => {
 
       const serialized = serialize("jwt", token, {
         httpOnly: true,
-        secure: true,
+
         sameSite: "None",
-        maxAge: 60 * 60 * 24 * 30,
+   
+        secure: true,
       });
     res.setHeader("Set-Cookie", serialized).status(200)
       .json({
@@ -108,9 +109,8 @@ const signUp = async (req, res, next) => {
     
       const serialized = serialize("jwt", token, {
         httpOnly: true,
-        secure: true,
         sameSite: "None",
-        maxAge: 30 * 24 * 60 * 60, 
+        secure: true,
       });
       res.setHeader("Set-Cookie", serialized);
     res.status(200).json({ message: vendor, token });
